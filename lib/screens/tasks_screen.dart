@@ -1,19 +1,33 @@
 import 'package:flutter/material.dart';
+import 'package:todoey_flutter/models/task.dart';
 import 'package:todoey_flutter/widgets/task_list.dart';
 import 'package:todoey_flutter/screens/add_task_screen.dart';
 
-class TasksScreen extends StatelessWidget {
+class TasksScreen extends StatefulWidget {
+  @override
+  _TasksScreenState createState() => _TasksScreenState();
+}
+
+class _TasksScreenState extends State<TasksScreen> {
   Widget buildBottomSheet(BuildContext context) => Container();
 
   @override
   Widget build(BuildContext context) {
+    // String newTaskTitle;
+
     return Scaffold(
       backgroundColor: Colors.blueAccent,
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.lightBlueAccent,
         onPressed: () {
           showModalBottomSheet(
-              context: context, builder: (context) => AddTaskScreen());
+              context: context,
+              builder: (context) => AddTaskScreen((newTaskTitle) {
+                    setState(() {
+                      tasks.add(Task(name: newTaskTitle));
+                      print('TaskScreen: newTaskTitle = ${newTaskTitle}');
+                    });
+                  }));
         },
         child: Icon(Icons.add),
       ),
@@ -46,7 +60,7 @@ class TasksScreen extends StatelessWidget {
                       fontWeight: FontWeight.w700),
                 ),
                 Text(
-                  '12 tasks',
+                  '${tasks.length} Tasks',
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 18,
@@ -64,7 +78,7 @@ class TasksScreen extends StatelessWidget {
                     topLeft: Radius.circular(20.0),
                     topRight: Radius.circular(20.0),
                   )),
-              child: TasksList(),
+              child: TasksList(tasks),
             ),
           ),
         ],
