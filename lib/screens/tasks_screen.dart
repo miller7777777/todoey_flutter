@@ -1,14 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:todoey_flutter/models/task.dart';
 import 'package:todoey_flutter/widgets/task_list.dart';
 import 'package:todoey_flutter/screens/add_task_screen.dart';
+import 'package:provider/provider.dart';
+import 'package:todoey_flutter/models/task_data.dart';
 
-class TasksScreen extends StatefulWidget {
-  @override
-  _TasksScreenState createState() => _TasksScreenState();
-}
-
-class _TasksScreenState extends State<TasksScreen> {
+class TasksScreen extends StatelessWidget {
   Widget buildBottomSheet(BuildContext context) => Container();
 
   @override
@@ -23,10 +19,10 @@ class _TasksScreenState extends State<TasksScreen> {
           showModalBottomSheet(
               context: context,
               builder: (context) => AddTaskScreen((newTaskTitle) {
-                    setState(() {
-                      tasks.add(Task(name: newTaskTitle));
-                      print('TaskScreen: newTaskTitle = ${newTaskTitle}');
-                    });
+                    // setState(() {
+                    //   tasks.add(Task(name: newTaskTitle));
+                    //   print('TaskScreen: newTaskTitle = ${newTaskTitle}');
+                    // });
                   }));
         },
         child: Icon(Icons.add),
@@ -60,7 +56,7 @@ class _TasksScreenState extends State<TasksScreen> {
                       fontWeight: FontWeight.w700),
                 ),
                 Text(
-                  '${tasks.length} Tasks',
+                  '${Provider.of<TaskData>(context).taskCount} Tasks',
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 18,
@@ -78,7 +74,7 @@ class _TasksScreenState extends State<TasksScreen> {
                     topLeft: Radius.circular(20.0),
                     topRight: Radius.circular(20.0),
                   )),
-              child: TasksList(tasks),
+              child: TasksList(),
             ),
           ),
         ],
